@@ -1,0 +1,40 @@
+PRUEBA DEL INSTALADOR DE NODOS SMMyE EN LA RASPBERRY PI
+=======================================================
+Abre una terminal en la Pi y copia los comandos de uno en uno.
+
+0) ANTES (ya revisado en este nodo)
+   Estacion02.py detenido y fuera de cron/systemd. Esto no debe mostrar nada:
+     sudo crontab -l 2>/dev/null | grep -i estacion; crontab -l 2>/dev/null | grep -i estacion; pgrep -af -i estacion
+
+1) DESCARGAR EL INSTALADOR (pide usuario y contraseña de administrador del panel)
+     curl -fsSL https://raw.githubusercontent.com/Minato97/smmye-app/main/nodo/descargar-instalador.sh -o ~/descargar-instalador.sh
+     bash ~/descargar-instalador.sh
+
+   (Otra forma: descargarlo desde el panel en una laptop -> Nodos IoT -> Descargar instalador,
+    y pasarlo a la Pi:  scp smmye-nodo-*.zip raspberry@IP_DE_LA_PI:~/ )
+
+2) DESCOMPRIMIR Y REVISAR
+     cd ~ && python3 -m zipfile -e smmye-nodo*.zip . && cd smmye-nodo && ls -a
+     grep -v TOKEN .env; grep -c _plantilla estacion.json
+   Debe salir SMMYE_API_URL=https://procurer-glaring-huddling.ngrok-free.dev/smmye  y un 1.
+
+3) INSTALAR
+     sudo bash install.sh
+   - Revisa la conexión con la API y que el instalador siga vigente.
+   - Pregunta qué sensores tiene ESTE nodo: Enter acepta lo que está entre [corchetes].
+     Fíjate cuáles dicen "detectado en ..." y cuáles "NO respondió".
+   - Revisa librerías y puertos, copia a /opt/smmye y deja el servicio smmye-agente activo.
+
+4) VER QUE EL NODO SE ANUNCIE
+     journalctl -u smmye-agente -f          (Ctrl+C para salir)
+   Debe decir "Solicitud enviada: esperando a que el administrador apruebe el nodo".
+   En el panel aparece en la campana -> aprobar con área, nombre y sensores.
+
+5) DESPUÉS DE APROBAR
+   En el mismo journalctl: "Nodo aprobado: clave recibida", "Sesión iniciada" y "Lote guardado".
+   La primera muestra llega a los ~5 minutos (10 lecturas cada 30 s).
+
+ÚTILES
+     python3 /opt/smmye/smmye_agente.py --diagnostico    sensores y conexión, sin enviar nada
+     sudo systemctl restart smmye-agente                 reiniciar el agente
+     sudo systemctl stop smmye-agente                    detenerlo (p. ej. para volver a Estacion02.py)
