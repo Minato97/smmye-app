@@ -1,0 +1,64 @@
+INSTALAR UN NODO SMMyE DESDE LA TERMINAL DE LA RASPBERRY PI
+===========================================================
+Todo se hace con UN comando. No hace falta abrir el panel en la Pi.
+
+ANTES DE EMPEZAR
+  - Sensores conectados y funcionando (como con Estacion02.py).
+  - Estacion02.py DETENIDO y fuera de cron/systemd. Esto no debe mostrar nada:
+      sudo crontab -l 2>/dev/null | grep -i estacion; crontab -l 2>/dev/null | grep -i estacion; pgrep -af -i estacion
+  - La Raspberry con internet.
+  - Usuario y contraseña de un ADMINISTRADOR del panel SMMyE.
+
+1) CORRER EL SCRIPT
+   Abre una terminal en la Pi y pega:
+
+     curl -fsSL https://procurer-glaring-huddling.ngrok-free.dev/smmye/api/nodo/instalar -o instalar-nodo.sh && bash instalar-nodo.sh
+
+2) CONTESTAR LO QUE PIDE
+   - Usuario administrador del panel
+   - Contraseña                          (no se ve al escribirla y no se guarda)
+   - Nombre sugerido para el nodo        (Enter para omitir; se puede poner al aprobar)
+   - Vigencia del instalador en horas    (Enter = 24)
+   Si ya existía ~/smmye-nodo, primero pregunta si se reemplaza.
+
+   El script genera el instalador, lo descomprime en ~/smmye-nodo y muestra la URL de la API
+   y cuántos sensores se van a revisar.
+
+3) "¿Correr el instalador ahora?"  ->  Enter (sí)
+   El instalador revisa la conexión con el panel y luego muestra una TABLA DE SENSORES:
+   cuáles respondieron, por qué pin/puerto y qué leyeron.
+     - Gira el anemómetro y mueve el balancín del pluviómetro mientras prueba, para confirmarlos.
+     - Si uno que está conectado sale "NO RESPONDIÓ": revisa su cableado y pulsa  r  para volver a probar.
+     - Enter  = instalar con lo que salió
+     - q      = salir sin instalar nada
+   Cada sensor tiene hasta 30 s para responder.
+
+4) APROBAR EL NODO EN EL PANEL (un administrador)
+   Campana de notificaciones -> solicitud del nodo nuevo (por su MAC) -> nombre y área.
+   En el checklist ya vienen marcados los que respondieron; los "No respondió" vienen sin marcar.
+   Ajusta lo que haga falta y pulsa Aprobar.
+
+5) COMPROBAR
+     journalctl -u smmye-agente -f          (Ctrl+C para salir)
+   Debe decir "Nodo aprobado: clave recibida", "Sesión iniciada" y "Lote guardado".
+   La primera muestra llega a los ~5 minutos.
+
+SI ALGO FALLA
+  "Usuario o contraseña incorrectos"          revisa los datos del administrador.
+  "no es administrador"                       ese usuario no puede generar instaladores.
+  "Demasiados intentos"                       espera 15 minutos.
+  "No hay conexión con la API"                revisa el internet de la Raspberry.
+  "Quedó corriendo libgpiod_pulsein"          lo dejó Estacion02.py:  sudo pkill -f libgpiod_pulsein
+  "La MAC ... YA es una estación"             ese nodo ya está dado de alta en el panel.
+  Un sensor "No respondió" después de aprobar: arréglalo y reinicia el agente; se agrega solo
+  (sudo systemctl restart smmye-agente).
+
+ÚTILES
+  sudo systemctl stop smmye-agente && (cd /opt/smmye && python3 smmye_agente.py --revisar); sudo systemctl start smmye-agente
+                                                    vuelve a mostrar la tabla de sensores (el agente se detiene
+                                                    mientras tanto porque ocupa los puertos)
+  sudo systemctl restart smmye-agente               reiniciar el agente
+  sudo systemctl stop smmye-agente                  detenerlo (p. ej. para volver a Estacion02.py)
+
+Ver esta guía en la Pi:
+  curl -fsSL https://raw.githubusercontent.com/Minato97/smmye-app/main/nodo/INSTALAR-NODO.txt
