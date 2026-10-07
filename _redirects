@@ -1,0 +1,4 @@
+# Cloudflare Pages (y Netlify): el build usa base "/smmye-app/" por GitHub Pages, así que en el
+# dominio de Pages (raíz) hay que reescribir /smmye-app/* a los archivos del repo. GitHub Pages ignora este archivo.
+/                /smmye-app/    302
+/smmye-app/*     /:splat        200
