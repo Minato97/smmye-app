@@ -60,5 +60,8 @@ SI ALGO FALLA
   sudo systemctl restart smmye-agente               reiniciar el agente
   sudo systemctl stop smmye-agente                  detenerlo (p. ej. para volver a Estacion02.py)
 
+Guía completa en PDF (con ejemplos de cada pantalla): botón "Guía de instalación" en Nodos IoT del panel, o
+  https://raw.githubusercontent.com/Minato97/smmye-app/main/docs/Guia_Instalacion_Nodos_SMMyE.pdf
+
 Ver esta guía en la Pi:
   curl -fsSL https://raw.githubusercontent.com/Minato97/smmye-app/main/nodo/INSTALAR-NODO.txt
