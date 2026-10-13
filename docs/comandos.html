@@ -121,6 +121,19 @@
     <div class="cmd"><code>ls /opt/smmye/datos/cola | wc -l</code><button>Copiar</button></div>
   </section>
 
+  <section id="letras">
+    <h2><span class="n">!</span>Letras o símbolos raros en la pantalla</h2>
+    <p>Si ves <code>Â°C</code>, <code>Ã¡</code> o <code>�</code>: la Raspberry está configurada en una codificación antigua (latin-1).
+       Corre los dos comandos y reinicia con <code>sudo reboot</code>. Comprueba con <code>locale charmap</code> (debe decir <code>UTF-8</code>).</p>
+    <p>1) Idioma del sistema en UTF-8:</p>
+    <div class="cmd"><code>sudo sed -i &#39;s/^# *es_MX.UTF-8 UTF-8/es_MX.UTF-8 UTF-8/&#39; /etc/locale.gen &amp;&amp; sudo locale-gen &amp;&amp; sudo update-locale LANG=es_MX.UTF-8 LANGUAGE=es_MX:es LC_ALL=es_MX.UTF-8</code><button>Copiar</button></div>
+    <p>2) Consola de texto (pantalla negra, sin escritorio) en UTF-8:</p>
+    <div class="cmd"><code>sudo sed -i &#39;s/^CHARMAP=.*/CHARMAP=&quot;UTF-8&quot;/&#39; /etc/default/console-setup &amp;&amp; sudo setupcon</code><button>Copiar</button></div>
+    <p>Si aun así salen <code>�</code>: es la fuente de la consola, que no trae símbolos como ● o ². El monitor ya los cambia solo
+       por caracteres simples (agente actualizado); para forzarlo:</p>
+    <div class="cmd"><code>smmye-monitor --ascii</code><button>Copiar</button></div>
+  </section>
+
   <section id="cero">
     <h2><span class="n">6</span>Empezar de cero</h2>
     <p>Borra la instalación (clave y MAC guardadas). Si el nodo sigue en el panel, bórralo ahí primero. Después vuelve al paso 2.</p>

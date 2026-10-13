@@ -57,6 +57,13 @@ SI ALGO FALLA
   Un sensor "No respondió" después de aprobar: arréglalo y reinicia el agente; se agrega solo
   (sudo systemctl restart smmye-agente).
 
+SI SALEN LETRAS O SÍMBOLOS RAROS (Â°C, Ã¡, �)
+  La Raspberry está en latin-1. Corre los dos y reinicia (sudo reboot); "locale charmap" debe decir UTF-8:
+    sudo sed -i 's/^# *es_MX.UTF-8 UTF-8/es_MX.UTF-8 UTF-8/' /etc/locale.gen && sudo locale-gen && sudo update-locale LANG=es_MX.UTF-8 LANGUAGE=es_MX:es LC_ALL=es_MX.UTF-8
+    sudo sed -i 's/^CHARMAP=.*/CHARMAP="UTF-8"/' /etc/default/console-setup && sudo setupcon
+  Si aún salen �: es la fuente de la consola de texto. El monitor usa caracteres simples solo; forzarlo: smmye-monitor --ascii
+  (Con botón Copiar: https://smmye-app.pages.dev/smmye-app/docs/comandos#letras )
+
 ÚTILES
   smmye-monitor                                     cada sensor con su última medida, en vivo (Ctrl+C para salir)
   sudo systemctl stop smmye-agente && (cd /opt/smmye && python3 smmye_agente.py --revisar); sudo systemctl start smmye-agente
