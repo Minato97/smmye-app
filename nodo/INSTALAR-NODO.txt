@@ -4,8 +4,8 @@ Todo se hace con UN comando. No hace falta abrir el panel en la Pi.
 
 ANTES DE EMPEZAR
   - Sensores conectados y funcionando (como con Estacion02.py).
-  - Estacion02.py DETENIDO y fuera de cron/systemd. Esto no debe mostrar nada:
-      sudo crontab -l 2>/dev/null | grep -i estacion; crontab -l 2>/dev/null | grep -i estacion; pgrep -af -i estacion
+  - Estacion02.py: si sigue corriendo o en el crontab, el instalador lo muestra y pregunta si lo detiene y lo quita
+    del arranque (comenta su línea del crontab y guarda un respaldo).
   - La Raspberry con internet.
   - Usuario y contraseña de un ADMINISTRADOR del panel SMMyE.
 
@@ -48,7 +48,7 @@ SI ALGO FALLA
   "no es administrador"                       ese usuario no puede generar instaladores.
   "Demasiados intentos"                       espera 15 minutos.
   "No hay conexión con la API"                revisa el internet de la Raspberry.
-  "Quedó corriendo libgpiod_pulsein"          lo dejó Estacion02.py:  sudo pkill -f libgpiod_pulsein
+  "Encontré el programa anterior"             contesta Enter: detiene Estacion02.py y lo quita del crontab.
   "La MAC ... YA es una estación"             ese nodo ya está dado de alta en el panel.
   Un sensor "No respondió" después de aprobar: arréglalo y reinicia el agente; se agrega solo
   (sudo systemctl restart smmye-agente).
