@@ -5,6 +5,6 @@
 #   https://smmye-app.pages.dev/guia                                 -> página de comandos con botón Copiar
 # Si cambia la URL de la API (ngrok), cambiarla también aquí.
 /i               https://procurer-glaring-huddling.ngrok-free.dev/smmye/api/nodo/instalar    302
-/guia            /smmye-app/docs/comandos.html                                               302
+/guia            /smmye-app/docs/comandos                                                    302
 /                /smmye-app/    302
 /smmye-app/*     /:splat        200

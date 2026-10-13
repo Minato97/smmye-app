@@ -30,6 +30,9 @@
   .pdf { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--verde-700); text-decoration: none;
          border: 1px solid var(--borde); background: var(--tarjeta); padding: 6px 12px; border-radius: 99px; }
   @media (prefers-color-scheme: dark) { .pdf { color: #34d399; } }
+  .botones { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pdf.principal { background: var(--verde); border-color: var(--verde); color: #fff; }
+  .pdf.principal:hover { background: var(--verde-600); }
   section { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 14px; padding: 16px 18px; margin: 14px 0; scroll-margin-top: 12px; }
   section:target { box-shadow: 0 0 0 3px rgba(16,185,129,.45); }
   h2 { font: 700 17px 'Plus Jakarta Sans', sans-serif; color: var(--tinta); margin: 0 0 4px; display: flex; gap: 10px; align-items: center; }
@@ -65,7 +68,10 @@
   <div class="intro">
     <p>Copia cada comando con su botón y pégalo en la terminal de la Raspberry Pi (en la terminal se pega con <b>Ctrl+Shift+V</b>).
        Los pasos completos, con ejemplos de cada pantalla, están en la guía en PDF.</p>
-    <a class="pdf" href="Guia_Instalacion_Nodos_SMMyE.pdf" download>⬇ Descargar la guía en PDF</a>
+    <div class="botones">
+      <a class="pdf principal" href="Guia_Instalacion_Nodos_SMMyE.pdf" download>⬇ Descargar la guía en PDF</a>
+      <a class="pdf" href="Guia_Instalacion_Nodos_SMMyE.pdf" target="_blank" rel="noopener">Ver el PDF</a>
+    </div>
   </div>
 
   <section id="conexion">
