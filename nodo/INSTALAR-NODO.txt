@@ -58,6 +58,7 @@ SI ALGO FALLA
   (sudo systemctl restart smmye-agente).
 
 ÚTILES
+  smmye-monitor                                     cada sensor con su última medida, en vivo (Ctrl+C para salir)
   sudo systemctl stop smmye-agente && (cd /opt/smmye && python3 smmye_agente.py --revisar); sudo systemctl start smmye-agente
                                                     vuelve a mostrar la tabla de sensores (el agente se detiene
                                                     mientras tanto porque ocupa los puertos)

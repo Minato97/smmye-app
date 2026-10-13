@@ -89,9 +89,15 @@
     <div class="cmd"><code>curl -fsSL https://procurer-glaring-huddling.ngrok-free.dev/smmye/api/nodo/instalar -o instalar-nodo.sh &amp;&amp; bash instalar-nodo.sh</code><button>Copiar</button></div>
   </section>
 
+  <section id="monitor">
+    <h2><span class="n">3</span>Ver los sensores en vivo</h2>
+    <p>Una línea por sensor con su última medida, si responde o no, y cuándo fue el último envío al panel. Abre al instante. Ctrl+C para salir.</p>
+    <div class="cmd"><code>smmye-monitor</code><button>Copiar</button></div>
+  </section>
+
   <section id="logs">
-    <h2><span class="n">3</span>Ver que el nodo mande datos</h2>
-    <p>Busca en orden: <i>Solicitud enviada</i> → (apruebas en el panel) → <i>Nodo aprobado</i> → <i>Sesión iniciada</i> → <i>Primer lote listo</i> (a los ~15 s; después, un lote cada 5 min). Ctrl+C para salir.</p>
+    <h2><span class="n">3b</span>Ver el registro completo del agente</h2>
+    <p>Con días de registro, en una microSD puede tardar en abrir: para ver los sensores usa <code>smmye-monitor</code>. Busca en orden: <i>Solicitud enviada</i> → (apruebas en el panel) → <i>Nodo aprobado</i> → <i>Sesión iniciada</i> → <i>Primer lote listo</i> (a los ~15 s; después, un lote cada 5 min). Ctrl+C para salir.</p>
     <div class="cmd"><code>journalctl -u smmye-agente -f</code><button>Copiar</button></div>
   </section>
 
@@ -118,7 +124,7 @@
   <section id="cero">
     <h2><span class="n">6</span>Empezar de cero</h2>
     <p>Borra la instalación (clave y MAC guardadas). Si el nodo sigue en el panel, bórralo ahí primero. Después vuelve al paso 2.</p>
-    <div class="cmd"><code>sudo systemctl disable --now smmye-agente; sudo rm -f /etc/systemd/system/smmye-agente.service &amp;&amp; sudo systemctl daemon-reload &amp;&amp; sudo rm -rf /opt/smmye ~/smmye-nodo ~/smmye-nodo*.zip ~/instalar-nodo.sh ~/i.sh &amp;&amp; echo "Pi limpia"</code><button>Copiar</button></div>
+    <div class="cmd"><code>sudo systemctl disable --now smmye-agente; sudo rm -f /etc/systemd/system/smmye-agente.service &amp;&amp; sudo systemctl daemon-reload &amp;&amp; sudo rm -rf /opt/smmye ~/smmye-nodo ~/smmye-nodo*.zip ~/instalar-nodo.sh ~/i.sh /usr/local/bin/smmye-monitor &amp;&amp; echo "Pi limpia"</code><button>Copiar</button></div>
   </section>
 
   <footer><img src="../img/ecoflow_idle.png" alt=""><span><b style="color:var(--verde-600)">EcoFlow · SMMyE</b> · Documento de uso interno · Centro Universitario de los Valles, Universidad de Guadalajara</span></footer>
