@@ -45,7 +45,7 @@ ANTES DE EMPEZAR
 5) COMPROBAR
      journalctl -u smmye-agente -f          (Ctrl+C para salir)
    Debe decir "Nodo aprobado: clave recibida", "Sesión iniciada" y "Lote guardado".
-   La primera muestra llega a los ~5 minutos.
+   La primera muestra llega ~15 segundos después de aprobar; luego, una cada 5 minutos.
 
 SI ALGO FALLA
   "Usuario o contraseña incorrectos"          revisa los datos del administrador.
