@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comandos de instalación · SMMyE</title>
+<link rel="icon" href="../favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #10b981; --verde-600: #059669; --verde-700: #047857; --verde-50: #f1faf6; --borde: #cdeadd;
+    --tinta: #0b1c30; --texto: #374151; --gris: #6c7a71; --term: #0b1c30; --fondo: #f7fbf9; --tarjeta: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --tinta: #e6f0f8; --texto: #c7d3df; --gris: #93a5b5; --fondo: #0a1622; --tarjeta: #0f2132; --borde: #1e3a4f; --verde-50: #0f2a24; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fondo); color: var(--texto); font: 15px/1.55 Inter, system-ui, sans-serif; }
+  header { background: linear-gradient(135deg, #ecfdf5, #f1faf6); border-bottom: 3px solid var(--verde); }
+  @media (prefers-color-scheme: dark) { header { background: linear-gradient(135deg, #0f2a24, #0a1622); } }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+  .top { display: flex; align-items: center; gap: 14px; padding: 18px 0; }
+  .top img.logo { width: 52px; height: 52px; }
+  .top .t { flex: 1; min-width: 0; }
+  .eyebrow { font: 700 11px 'Plus Jakarta Sans', sans-serif; letter-spacing: .16em; color: var(--verde); text-transform: uppercase; }
+  h1 { font: 800 24px/1.15 'Plus Jakarta Sans', sans-serif; color: var(--tinta); margin: 2px 0 0; }
+  .top img.eco { height: 86px; flex: none; }
+  .intro { padding: 18px 0 4px; }
+  .intro p { margin: 0 0 10px; }
+  .pdf { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--verde-700); text-decoration: none;
+         border: 1px solid var(--borde); background: var(--tarjeta); padding: 6px 12px; border-radius: 99px; }
+  @media (prefers-color-scheme: dark) { .pdf { color: #34d399; } }
+  section { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 14px; padding: 16px 18px; margin: 14px 0; scroll-margin-top: 12px; }
+  section:target { box-shadow: 0 0 0 3px rgba(16,185,129,.45); }
+  h2 { font: 700 17px 'Plus Jakarta Sans', sans-serif; color: var(--tinta); margin: 0 0 4px; display: flex; gap: 10px; align-items: center; }
+  h2 .n { flex: none; width: 28px; height: 28px; border-radius: 8px; background: var(--verde); color: #fff; display: grid; place-items: center; font-size: 14px; }
+  section > p { margin: 4px 0 10px; color: var(--gris); }
+  .cmd { position: relative; background: var(--term); border-radius: 10px; padding: 12px 104px 12px 14px; margin: 8px 0; }
+  .cmd code { display: block; font: 13.5px/1.55 'JetBrains Mono', monospace; color: #dbe7f3; white-space: pre-wrap; word-break: break-all; }
+  .cmd button { position: absolute; top: 8px; right: 8px; border: 0; border-radius: 8px; padding: 7px 12px; cursor: pointer;
+                font: 600 13px Inter, sans-serif; background: var(--verde); color: #fff; min-width: 84px; }
+  .cmd button:hover { background: var(--verde-600); }
+  .cmd button.ok { background: #34d399; color: var(--term); }
+  .nota { font-size: 13.5px; color: var(--gris); margin: 6px 0 0; }
+  .nota code, section > p code { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; background: var(--verde-50); padding: 1px 5px; border-radius: 4px; }
+  footer { display: flex; align-items: center; gap: 8px; color: var(--gris); font-size: 12.5px; padding: 18px 0 30px; }
+  footer img { height: 26px; }
+  @media (max-width: 560px) {
+    .top img.eco { display: none; }
+    .cmd { padding: 12px 14px 50px; }
+    .cmd button { top: auto; bottom: 8px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap top">
+    <img class="logo" src="../img/logo_smmye.png" alt="SMMyE">
+    <div class="t"><div class="eyebrow">SMMyE · Nodos IoT</div><h1>Comandos para instalar un nodo</h1></div>
+    <img class="eco" src="../img/ecoflow_wave.png" alt="EcoFlow">
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <p>Copia cada comando con su botón y pégalo en la terminal de la Raspberry Pi (en la terminal se pega con <b>Ctrl+Shift+V</b>).
+       Los pasos completos, con ejemplos de cada pantalla, están en la guía en PDF.</p>
+    <a class="pdf" href="Guia_Instalacion_Nodos_SMMyE.pdf" download>⬇ Descargar la guía en PDF</a>
+  </div>
+
+  <section id="conexion">
+    <h2><span class="n">1</span>Comprobar la conexión con la API</h2>
+    <p>Debe decir <code>API: HTTP 200</code>. <code>000</code> = la Pi no tiene internet; <code>404</code> = el servidor no tiene la versión nueva.</p>
+    <div class="cmd"><code>curl -sSL -m 20 -o /dev/null -w 'API: HTTP %{http_code}\n' https://smmye-app.pages.dev/i</code><button>Copiar</button></div>
+  </section>
+
+  <section id="instalar">
+    <h2><span class="n">2</span>Descargar e instalar (un solo comando)</h2>
+    <p>Pide usuario y contraseña de un administrador del panel, genera el instalador, lo descomprime en <code>~/smmye-nodo</code> y lo corre.
+       Si <code>Estacion02.py</code> sigue corriendo, te pregunta si lo detiene.</p>
+    <div class="cmd"><code>curl -fsSL https://smmye-app.pages.dev/i -o i.sh &amp;&amp; bash i.sh</code><button>Copiar</button></div>
+    <p class="nota">Versión larga (misma acción, directo a la API):</p>
+    <div class="cmd"><code>curl -fsSL https://procurer-glaring-huddling.ngrok-free.dev/smmye/api/nodo/instalar -o instalar-nodo.sh &amp;&amp; bash instalar-nodo.sh</code><button>Copiar</button></div>
+  </section>
+
+  <section id="logs">
+    <h2><span class="n">3</span>Ver que el nodo mande datos</h2>
+    <p>Busca en orden: <i>Solicitud enviada</i> → (apruebas en el panel) → <i>Nodo aprobado</i> → <i>Sesión iniciada</i> → <i>Lote guardado</i>. Ctrl+C para salir.</p>
+    <div class="cmd"><code>journalctl -u smmye-agente -f</code><button>Copiar</button></div>
+  </section>
+
+  <section id="revisar">
+    <h2><span class="n">4</span>Volver a ver la tabla de sensores</h2>
+    <p>Detiene el agente un momento (ocupa los puertos), muestra qué sensores responden y lo vuelve a arrancar.</p>
+    <div class="cmd"><code>sudo systemctl stop smmye-agente &amp;&amp; (cd /opt/smmye &amp;&amp; python3 smmye_agente.py --revisar); sudo systemctl start smmye-agente</code><button>Copiar</button></div>
+  </section>
+
+  <section id="utiles">
+    <h2><span class="n">5</span>Comandos útiles</h2>
+    <p>¿Está corriendo? (debe decir <code>active</code>)</p>
+    <div class="cmd"><code>systemctl is-active smmye-agente</code><button>Copiar</button></div>
+    <p>Reiniciar el agente (vuelve a probar los sensores):</p>
+    <div class="cmd"><code>sudo systemctl restart smmye-agente</code><button>Copiar</button></div>
+    <p>Revisar sensores y conexión sin enviar nada:</p>
+    <div class="cmd"><code>python3 /opt/smmye/smmye_agente.py --diagnostico</code><button>Copiar</button></div>
+    <p>MAC con la que el nodo está registrado:</p>
+    <div class="cmd"><code>cat /opt/smmye/datos/mac</code><button>Copiar</button></div>
+    <p>Lotes guardados sin enviar (crece si no hay internet):</p>
+    <div class="cmd"><code>ls /opt/smmye/datos/cola | wc -l</code><button>Copiar</button></div>
+  </section>
+
+  <section id="cero">
+    <h2><span class="n">6</span>Empezar de cero</h2>
+    <p>Borra la instalación (clave y MAC guardadas). Si el nodo sigue en el panel, bórralo ahí primero. Después vuelve al paso 2.</p>
+    <div class="cmd"><code>sudo systemctl disable --now smmye-agente; sudo rm -f /etc/systemd/system/smmye-agente.service &amp;&amp; sudo systemctl daemon-reload &amp;&amp; sudo rm -rf /opt/smmye ~/smmye-nodo ~/smmye-nodo*.zip ~/instalar-nodo.sh ~/i.sh &amp;&amp; echo "Pi limpia"</code><button>Copiar</button></div>
+  </section>
+
+  <footer><img src="../img/ecoflow_idle.png" alt=""><span><b style="color:var(--verde-600)">EcoFlow · SMMyE</b> · Documento de uso interno · Centro Universitario de los Valles, Universidad de Guadalajara</span></footer>
+</main>
+
+<script>
+  // Copiar al portapapeles (con respaldo para navegadores sin la API moderna).
+  async function copiar(texto) {
+    try { await navigator.clipboard.writeText(texto); return true; } catch (e) {}
+    const t = document.createElement('textarea');
+    t.value = texto; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(t); return ok;
+  }
+  document.querySelectorAll('.cmd button').forEach(b => {
+    b.addEventListener('click', async () => {
+      const ok = await copiar(b.previousElementSibling.textContent);
+      b.textContent = ok ? '✓ Copiado' : 'Selecciónalo';
+      b.classList.toggle('ok', ok);
+      setTimeout(() => { b.textContent = 'Copiar'; b.classList.remove('ok'); }, 1800);
+    });
+  });
+</script>
+</body>
+</html>

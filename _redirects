@@ -1,4 +1,10 @@
 # Cloudflare Pages (y Netlify): el build usa base "/smmye-app/" por GitHub Pages, así que en el
 # dominio de Pages (raíz) hay que reescribir /smmye-app/* a los archivos del repo. GitHub Pages ignora este archivo.
+# Direcciones cortas para la Raspberry Pi (caben en una línea del manual, que en PDF no se puede copiar bien si se parte):
+#   curl -fsSL https://smmye-app.pages.dev/i -o i.sh && bash i.sh    -> script de instalación de nodos (GET /api/nodo/instalar)
+#   https://smmye-app.pages.dev/guia                                 -> página de comandos con botón Copiar
+# Si cambia la URL de la API (ngrok), cambiarla también aquí.
+/i               https://procurer-glaring-huddling.ngrok-free.dev/smmye/api/nodo/instalar    302
+/guia            /smmye-app/docs/comandos.html                                               302
 /                /smmye-app/    302
 /smmye-app/*     /:splat        200

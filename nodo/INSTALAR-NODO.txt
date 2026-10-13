@@ -12,7 +12,11 @@ ANTES DE EMPEZAR
 1) CORRER EL SCRIPT
    Abre una terminal en la Pi y pega:
 
-     curl -fsSL https://procurer-glaring-huddling.ngrok-free.dev/smmye/api/nodo/instalar -o instalar-nodo.sh && bash instalar-nodo.sh
+     curl -fsSL https://smmye-app.pages.dev/i -o i.sh && bash i.sh
+
+   (Todos los comandos con botón Copiar: https://smmye-app.pages.dev/guia
+    Versión larga, directo a la API:
+     curl -fsSL https://procurer-glaring-huddling.ngrok-free.dev/smmye/api/nodo/instalar -o instalar-nodo.sh && bash instalar-nodo.sh )
 
 2) CONTESTAR LO QUE PIDE
    - Usuario administrador del panel
